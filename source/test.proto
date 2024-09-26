@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+option go_package = "maestro-koprasi-svc/rpc/proto/saving";
+
+
+message DefaultSimpananResponse {
+    string message = 1;
+}
+
+message SimpananCreateRequest {
+    int32 workspace_id = 1;
+    string transaction_date = 2;
+    int64 total = 3;
+    bool is_credit = 4;
+    int32 cash_id = 5;
+    string description = 6;
+    int32 user_id = 7;
+    string full_name = 8;
+    string user_image = 9;
+    string role = 10;
+    string depositor_name = 11;
+    string identity_number = 12;
+    string address = 13;
+    int32 simpanan_id = 14;
+}
+
+message SimpananDetailRequest {
+    string transaction_code = 1;
+}
+
+message SimpananDetailResponse {
+    int32 id = 11;
+    string transaction_code = 12;
+    int32 simpanan_id = 13;
+    string simpanan_name = 17;
+    int32 workspace_id = 1;
+    string transaction_date = 2;
+    int64 total = 3;
+    bool is_credit = 4;
+    int32 cash_id = 5;
+    string description = 6;
+    int32 user_id = 7;
+    string full_name = 8;
+    string user_image = 9;
+    string role = 10;
+    string depositor_name = 14;
+    string identity_number = 15;
+    string address = 16;
+}
+
+
+message SimpananUpdateRequest {
+    int32 id = 11;
+    string transaction_code = 12;
+    string transaction_type = 17;
+    int32 simpanan_id = 13;
+    int32 workspace_id = 1;
+    string transaction_date = 2;
+    int64 total = 3;
+    bool is_credit = 4;
+    int32 cash_id = 5;
+    string description = 6;
+    int32 user_id = 7;
+    string full_name = 8;
+    string user_image = 9;
+    string role = 10;
+    string depositor_name = 14;
+    string identity_number = 15;
+    string address = 16;
+}
+
+message SimpananDeleteRequest {
+    string transaction_code = 1;
+}
+
+message SimpananExistRequest {
+    string transaction_code = 1;
+}
+
+message SimpananExistResponse {
+    bool exist = 1;
+}
+
+message SimpananListResponse {
+    repeated SimpananDetailResponse data = 1;
+    int32 total_page = 2;
+    int32 total = 3;
+}
+
+message SimpananListFilterRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    int32 workspace_id = 3;
+    string type = 7;
+    optional string start_date = 4;
+    optional string end_date = 5;
+    optional string transaction_code = 6;
+}
+
+message SimpananUserBalanceRequest {
+    int32 user_id = 1;
+    int32 workspace_id = 2;
+}
+
+message SimpananUserBalanceResponse {
+    int64 balance = 1;
+    bool exist = 2;
+}
+
+message SimpananKasBalanceRequest {
+    int32 kas_id = 1;
+    int32 workspace_id = 2;
+}
+
+message SimpananKasBalanceResponse {
+    int64 balance = 1;
+    bool exist = 2;
+}
+
+service SimpananService {
+    rpc SimpananCreate(SimpananCreateRequest) returns (DefaultSimpananResponse) {}
+    rpc SimpananDetail(SimpananDetailRequest) returns (SimpananDetailResponse) {}
+    rpc SimpananList(SimpananListFilterRequest) returns (SimpananListResponse) {}
+    rpc SimpananUpdate(SimpananUpdateRequest) returns (DefaultSimpananResponse) {}
+    rpc SimpananDelete(SimpananDeleteRequest) returns (DefaultSimpananResponse) {}
+    rpc SimpananKasBalance(SimpananKasBalanceRequest) returns (SimpananKasBalanceResponse) {}
+    rpc SimpananUserBalance(SimpananUserBalanceRequest) returns (SimpananUserBalanceResponse) {}
+}
